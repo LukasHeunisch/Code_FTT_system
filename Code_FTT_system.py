@@ -3,12 +3,9 @@ import matplotlib.pyplot as plt
 import scipy.optimize as opt
 import scipy
 import math
-import functools
-from IPython.display import clear_output
 from qutip import *
 from functools import reduce
 from operator import mul
-from collections import deque
 
 
 def embed(op, which, dims):
@@ -296,8 +293,6 @@ class TwoQ_Gate:
             self.U = self.extract_unitary()
             f = self.get_fidelity()
             val = 1 - f 
-            print(val)
-            print(x)
             return(val)
 
         result = opt.minimize(cost_function, x0 = init_params, bounds = bounds, method = method)
@@ -362,8 +357,8 @@ U_CZ = np.diag([1, 1, 1, -1]) # ideal unitary
 CZ = TwoQ_Gate(U_CZ, [0, 2], S) # initialize 2Q-Gate (ideal_U, Target: CZ should operate on Q1 and Q2, System)
 CZ.add_H_drive(Drive) # add drives
 
-#CZ.extract_unitary()
-#print(CZ.get_fidelity())
+CZ.extract_unitary()
+print(CZ.get_fidelity())
 
 
 # Example optimizing 40ns CZ-gate
